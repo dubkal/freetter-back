@@ -1,6 +1,6 @@
 package dev.dubkal.freetter.service;
 
-import dev.dubkal.freetter.dto.RegistrationDto;
+import dev.dubkal.freetter.dto.SignupDto;
 import dev.dubkal.freetter.model.User;
 import dev.dubkal.freetter.repository.UserRepository;
 import org.modelmapper.ModelMapper;
@@ -17,9 +17,9 @@ public class AuthService {
     ModelMapper modelMapper = new ModelMapper();
 
 
-    public RegistrationDto registerUser(RegistrationDto registrationDto) {
-        User savedUser = userRepository.save(modelMapper.map(registrationDto, User.class));
-        return modelMapper.map(savedUser, RegistrationDto.class);
+    public SignupDto registerUser(SignupDto signupDto) {
+        User savedUser = userRepository.save(modelMapper.map(signupDto, User.class));
+        return modelMapper.map(savedUser, SignupDto.class);
     }
 
     public boolean usernameExists(String username) {

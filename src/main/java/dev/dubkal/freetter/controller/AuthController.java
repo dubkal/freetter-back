@@ -1,8 +1,8 @@
 package dev.dubkal.freetter.controller;
 
-import dev.dubkal.freetter.dto.RegistrationDto;
+import dev.dubkal.freetter.dto.SignupDto;
 import dev.dubkal.freetter.service.AuthService;
-import dev.dubkal.freetter.validator.RegistrationFormValidator;
+import dev.dubkal.freetter.validator.SignupFormValidator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.context.MessageSource;
@@ -22,34 +22,33 @@ import java.util.stream.Collectors;
 
 @RestController
 public class AuthController {
-    AuthController(RegistrationFormValidator registrationFormValidator,
+    AuthController(SignupFormValidator signupFormValidator,
                    AuthService authService,
                    MessageSource messageSource) {
-        this.registrationFormValidator = registrationFormValidator;
+        this.signupFormValidator = signupFormValidator;
         this.authService = authService;
         this.messageSource = messageSource;
     }
 
     private static final Logger logger = LoggerFactory.getLogger(AuthController.class);
-    private final RegistrationFormValidator registrationFormValidator;
+    private final SignupFormValidator signupFormValidator;
     private final MessageSource messageSource;
     private final AuthService authService;
 
     @InitBinder
     private void initBinder(WebDataBinder binder) {
-        binder.setValidator(registrationFormValidator);
+        binder.setValidator(signupFormValidator);
     }
 
-    @PostMapping("/api/auth/register")
-    public ResponseEntity<Object> register(@Validated @RequestBody RegistrationDto registrationDto, BindingResult bindingResult) {
-        logger.info("User is: " + registrationDto.toString());
+    @PostMapping("/api/auth/signup")
+    public ResponseEntity<Object> signup(@Validated @RequestBody SignupDto signupDto, BindingResult bindingResult) {
+        logger.info("User is: " + signupDto.toString());
         if (bindingResult.hasErrors()) {
-            System.out.println("validation error" + registrationDto);
             List<String> errors = bindingResult.getFieldErrors().stream()
                     .map(objectError -> messageSource.getMessage(Objects.requireNonNull(objectError.getCode()),null,Locale.ENGLISH))
                     .collect(Collectors.toList());
-            return ResponseEntity.ok(errors);
+            return ResponseEntity.badRequest().body(errors);
         }
-        return ResponseEntity.ok(authService.registerUser(registrationDto));
+        return ResponseEntity.ok(authService.registerUser(signupDto));
     }
 }
