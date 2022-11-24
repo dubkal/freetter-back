@@ -19,6 +19,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.annotation.Validated;
+import org.springframework.web.bind.WebDataBinder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
@@ -50,10 +51,10 @@ public class AuthController {
     private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
 
-//    @InitBinder()
-//    private void initBinder(WebDataBinder binder) {
-//        binder.setValidator(signupFormValidator);
-//    }
+    @InitBinder("signupDto")
+    private void initBinder(WebDataBinder binder) {
+        binder.setValidator(signupFormValidator);
+    }
 
     @PostMapping("/login")
     public ResponseEntity<?> authenticateUser(@RequestBody LoginDto loginDto) {
@@ -79,7 +80,7 @@ public class AuthController {
 
     @PostMapping("/signup")
     public ResponseEntity<Object> signup(@Validated @RequestBody SignupDto signupDto, BindingResult bindingResult) {
-        logger.info("User is: " + signupDto.toString());
+        logger.info("User signup request: " + signupDto.toString());
         if (bindingResult.hasErrors()) {
             List<String> errors = bindingResult.getFieldErrors().stream()
                     .map(objectError -> messageSource.getMessage(Objects.requireNonNull(objectError.getCode()), null, Locale.ENGLISH))

@@ -3,7 +3,10 @@ package dev.dubkal.freetter.service;
 import dev.dubkal.freetter.dto.SignupDto;
 import dev.dubkal.freetter.model.User;
 import dev.dubkal.freetter.repository.UserRepository;
+import org.modelmapper.Converter;
 import org.modelmapper.ModelMapper;
+import org.modelmapper.PropertyMap;
+import org.modelmapper.TypeMap;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -18,19 +21,11 @@ public class AuthService {
     }
 
     private final UserRepository userRepository;
-    ModelMapper modelMapper = new ModelMapper();
-
-
-//    public void registerUser(SignupDto signupDto) {
-//        modelMapper.typeMap(SignupDto.class, User.class)
-//                .addMapping(src -> encoder.encode(src.getPassword()), User::setPassword);
-//        System.out.println(modelMapper.map(signupDto, User.class));
-//        userRepository.save(modelMapper.map(signupDto, User.class));
-//    }
 
     public void registerUser(SignupDto signupDto) {
-        //todo:make it use model mapper
-        userRepository.save(new User(signupDto.getUsername(),signupDto.getFirstName(),signupDto.getLastName(),encoder.encode(signupDto.getPassword())));
+        ModelMapper modelMapper = new ModelMapper();
+        signupDto.setPassword(encoder.encode(signupDto.getPassword()));
+        userRepository.save(modelMapper.map(signupDto,User.class));
     }
 
     public boolean existsByUsername(String username) {
