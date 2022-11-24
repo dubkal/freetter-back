@@ -30,7 +30,7 @@ public class SignupFormValidator implements Validator {
         if(!signupDto.getUsername().matches("\\p{Alnum}*")){
             errors.rejectValue("username","signup.username.allowed","only letters and numbers allowed");
         }
-        if(authService.usernameExists(signupDto.getUsername())){
+        if(authService.existsByUsername(signupDto.getUsername())){
             errors.rejectValue("username","signup.username.exists","username taken");
         }
         if(signupDto.getFirstName() == null || signupDto.getFirstName().strip().equals("")){
