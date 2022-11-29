@@ -39,7 +39,6 @@ public class AuthController {
         this.authService = authService;
         this.messageSource = messageSource;
         this.authenticationManager = authenticationManager;
-        this.encoder = encoder;
         this.jwtUtils = jwtUtils;
     }
 
@@ -48,7 +47,6 @@ public class AuthController {
     private final MessageSource messageSource;
     private final AuthService authService;
     private final AuthenticationManager authenticationManager;
-    private final PasswordEncoder encoder;
     private final JwtUtils jwtUtils;
 
     @InitBinder("signupDto")

@@ -35,7 +35,7 @@ public class WebSecurityConfig {
                 .sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS).and().authorizeRequests()
                 .antMatchers("/h2-console/**").permitAll()
                 .antMatchers("/api/auth/**").permitAll()
-                .antMatchers("/api/test/**","/api/home/**").permitAll().anyRequest()
+                .antMatchers("/api/**","/api/home/**").permitAll().anyRequest()
                 .authenticated();
         http.headers().frameOptions().sameOrigin();
         http.addFilterBefore(authenticationJwtTokenFilter(), UsernamePasswordAuthenticationFilter.class);
