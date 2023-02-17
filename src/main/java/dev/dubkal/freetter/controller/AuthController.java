@@ -70,6 +70,7 @@ public class AuthController {
                         jwt,
                         userDetails.getId(),
                         userDetails.getUsername(),
+                        userDetails.getEmail(),
                         userDetails.getFirstName(),
                         userDetails.getLastName()
                 )

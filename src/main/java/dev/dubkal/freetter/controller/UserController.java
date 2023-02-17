@@ -3,7 +3,6 @@ package dev.dubkal.freetter.controller;
 import dev.dubkal.freetter.dto.MessageResponse;
 import dev.dubkal.freetter.dto.UserDto;
 import dev.dubkal.freetter.service.UserService;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.core.Authentication;
 import org.springframework.web.bind.annotation.CrossOrigin;

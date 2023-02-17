@@ -20,6 +20,8 @@ public class User {
 
     private String username;
 
+    private String email;
+
     private String firstName;
 
     private String lastName;
@@ -28,8 +30,9 @@ public class User {
 
     private Timestamp createdDate;
 
-    public User(String username, String firstName, String lastName, String password, Timestamp createdDate) {
+    public User(String username, String email, String firstName, String lastName, String password, Timestamp createdDate) {
         this.username = username;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;

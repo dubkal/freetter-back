@@ -16,16 +16,22 @@ public class UserDetailsImpl implements UserDetails {
     private final Long id;
 
     private final String username;
+
+    @Getter
+    private final String email;
+
     @Getter
     private final String firstName;
+
     @Getter
     private final String lastName;
 
     private final String password;
 
-    public UserDetailsImpl(Long id, String username, String firstName, String lastName, String password) {
+    public UserDetailsImpl(Long id, String username, String email, String firstName, String lastName, String password) {
         this.id = id;
         this.username = username;
+        this.email = email;
         this.firstName = firstName;
         this.lastName = lastName;
         this.password = password;
@@ -36,6 +42,7 @@ public class UserDetailsImpl implements UserDetails {
         return new UserDetailsImpl(
                 user.getId(),
                 user.getUsername(),
+                user.getEmail(),
                 user.getFirstName(),
                 user.getLastName(),
                 user.getPassword()
